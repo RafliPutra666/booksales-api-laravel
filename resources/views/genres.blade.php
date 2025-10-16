@@ -23,7 +23,7 @@
                 <tbody class="text-center">
                     @foreach ($genres as $genre)
                         <tr>
-                            <td>{{ $genre['title'] }}</td>
+                            <td>{{ $genre['judul'] }}</td>
                             <td>{{ $genre['description'] }}</td>
                         </tr>
                     @endforeach
