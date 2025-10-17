@@ -8,8 +8,3 @@ use App\Http\Controllers\BookController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-
-Route::get('/books', [BookController::class, 'index']);
-Route::get('/genres', [GenresController::class, 'index']);
-Route::get('/authors', [ AuthorsController::class, 'index']);
