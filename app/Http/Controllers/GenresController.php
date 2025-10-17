@@ -18,4 +18,24 @@ class GenresController extends Controller
             'data'    => $genres
         ], 200);
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $genre = Genre::create([
+            'judul' => $request->judul,
+            'description' => $request->description,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Genre berhasil ditambahkan',
+            'data' => $genre
+        ], 201);
+    }
+
 }
