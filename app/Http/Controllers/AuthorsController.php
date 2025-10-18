@@ -23,7 +23,7 @@ class AuthorsController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'photo' => 'required|string|max:255', // bisa berupa URL atau path
+            'photo' => 'required|string|max:255',
             'bio' => 'nullable|string',
         ]);
 
@@ -40,5 +40,63 @@ class AuthorsController extends Controller
         ], 201);
     }
     
+     public function show($id)
+    {
+        $author = Author::find($id);
+        if (!$author) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Author tidak ditemukan'
+            ], 404);
+        }
 
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail Author',
+            'data' => $author
+        ], 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $author = Author::find($id);
+        if (!$author) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Author tidak ditemukan'
+            ], 404);
+        }
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'photo' => 'required|string|max:255',
+            'bio' => 'nullable|string',
+        ]);
+
+        $author->update($request->only('name', 'photo', 'bio'));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Author berhasil diperbarui',
+            'data' => $author
+        ], 200);
+    }
+
+    public function destroy($id)
+    {
+        $author = Author::find($id);
+        if (!$author) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Author tidak ditemukan'
+            ], 404);
+        }
+
+        $author->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Author berhasil dihapus'
+        ], 200);
+    }
 }
